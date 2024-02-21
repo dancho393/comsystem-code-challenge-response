@@ -7,9 +7,7 @@
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.boot.test.context.SpringBootTest;
     import org.springframework.test.context.ContextConfiguration;
-    import org.springframework.web.ErrorResponseException;
 
-    import java.lang.reflect.Array;
     import java.util.ArrayList;
     import java.util.Arrays;
 
@@ -33,7 +31,9 @@
                     RobotAction.DIG));
 
             RobotPlan robotPlan = new RobotPlan(5,16,robotActions);
-            assertEquals(robotPlan,robotOperations.excavateStonesForDays(5),"Must Be 5 Because the best case is:COPY,COPY,COPY,COPY,DIG-2-4-8-16-16");
+            assertEquals(robotPlan,
+                    robotOperations.excavateStonesForDays(5),
+                    "Must Be 5 Because the best case is:COPY,COPY,COPY,COPY,DIG-2-4-8-16-16");
         }
         @Test
         public void testDaysRequiredToCollectStonesWithCorrectData(){
@@ -43,6 +43,22 @@
                     RobotAction.CLONE,
                     RobotAction.DIG));
             RobotPlan robotPlan = new RobotPlan(4,7,robotActions);
-            assertEquals(robotPlan,robotOperations.daysRequiredToCollectStones(7));
+            assertEquals(robotPlan
+                    ,robotOperations.daysRequiredToCollectStones(7),
+                    "Second Test");
+        }
+        @Test
+        public void testDaysRequiredToCollectStonesWithIncorrectData(){
+            RobotPlan robotPlan  = new RobotPlan(0,0,new ArrayList<>());
+            assertEquals(robotPlan,
+                    robotOperations.daysRequiredToCollectStones(-5),
+                    "Must be zero because the input is invalid");
+        }
+        @Test
+        public void testExcavateStonesDaysWithIncorrectData(){
+            RobotPlan robotPlan  = new RobotPlan(0,0,new ArrayList<>());
+            assertEquals(robotPlan,
+                    robotOperations.excavateStonesForDays(-5),
+                    "Must be zero because the input is invalid");
         }
     }
